@@ -1,37 +1,52 @@
-This is my submission for the Brightwheel technical exam. The below README will educate you on how to ingest the provided files and initalize a DBT project from scratch.
+## Brightwheel Technical Exam
 
-### Using the starter project
-Note: This was done on a new Mac leveraging Apple Silicon and the below set up instructions may differ depending on your machine.
+This is my submission for the Brightwheel technical exam. The below README will educate you on how to ingest the supplied google spreadsheet data and initalize a DBT project to create a basic `leads` mart model.
+
+> [!Note]
+> This setup guide is geared towards Mac's leveeraging Apple Silicon. If you are leveraging a non Apple machine or an Apple machine with an Intel processor your base setup instructions may differ.
 
 
-## Prerequisites
+## Pre-requisites
 1. Install [Rosetta](https://support.apple.com/en-us/102527) to enable applications to run that were built for Intel processors. This will run in the background.
 
 2. Install [Python 3.8](https://www.python.org/downloads/macos/), specifically I chose the 3.8 release.
 
-3. Install [Brew](https://brew.sh) so that we can later install postgres. Run the following commands to update your .zsh profile with the approporiate system links.
-``` bash
+3. Install [Brew](https://brew.sh) so that we can later leverage it to install postgres. Run the following commands to update your .zsh profile with the approporiate system links.
+``` zsh
     (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/paulfoote/.zprofile
     eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
+> [!WARNING]
+> Your configuration settings file and the python path may differ if you use bash over zshell.
 
-4. I chose Postgres for my database as I am quite comfortable with it. You can chose your own but it will impact the dbt adapter option you need to install later and file syntax.
+4. I chose Postgres (version 16) for my database as I am quite comfortable with it. You can chose your own but it will impact the dbt adapter option you need to install later and file syntax.
 
-``` bash
+``` zsh
 brew install postgresql@16
 ```
 
-## Installation
-### Postgres
+## Postgres Database Set Up
+> [!NOTE]
+> I chose to load data leveraging psql copy statements directly into table. This consideration reduced the time spent on data ingestion in favor of more time modeling. If I were to productionalize this work, I'd seek to continue spending minimal time on data ingestion through cloud based ingestion solutions such as Airbyte, Fivetran or Stitch. This consideration will be addressed in the long term considerations section.
+
 1. Create a Postgres database named brightwheel
 ``` bash
 createdb brightwheel
 ```
 
-Note: I chose to load data leveraging copy statements into postgresql to preserve time for data modeling. This will be futher discussed in long term considerations.
-2. Download each google spreadsheet tab as it's own file to your `Downloads` folder.
+2. Download each google spreadsheet tab as it's own file to your `Downloads` folder
 
-3. Create the postgres table stucture to store each table
+3. Login to your database
+> [!Warning]
+> I have not setup any passwords as their is no sensitive data contained
+
+``` sql
+psql brightwheel
+```
+
+4. Create the four postgres tables by copy / pasting the create table statements found by expanding each table name below.
+<details>
+    <summary> Salesforce Leads</summary>
 
 ``` sql
 CREATE TABLE salesforce_leads (
@@ -67,6 +82,10 @@ CREATE TABLE salesforce_leads (
     brightwheel_school_uuid_c VARCHAR(255) -- Custom field for Brightwheel school UUID
 );
 ```
+</details>
+
+<details>
+    <summary> Source 1s</summary>
 
 ``` sql
 CREATE TABLE source1 (
@@ -85,6 +104,9 @@ CREATE TABLE source1 (
     primary_contact_role VARCHAR(255)         -- Primary Contact Role field, with a maximum length of 255 characters
 );
 ```
+</details>
+<details>
+    <summary> Source 2</summary>
 
 ```sql
 CREATE TABLE source2 (
@@ -120,7 +142,10 @@ CREATE TABLE source2 (
     evening_hours VARCHAR(255)                  -- Evening Hours field, with a maximum length of 255 characters
 );
 ```
+</details>
 
+<details>
+    <summary> Source 3 </summary>
 ``` sql
 CREATE TABLE source3 (
     operation VARCHAR(255) NOT NULL,           -- Operation field, required, with a maximum length of 255 characters
@@ -145,38 +170,66 @@ CREATE TABLE source3 (
     school VARCHAR(255)                             -- School field, true or false
 );
 ```
+    </details>
 
 4. Run the following copy statements to upload the data
-``` bash
+``` zsh
 COPY salesforce_leads FROM '~/Downloads/brightwheel_salesforce_leads.csv' DELIMITER ',' csv header;
 COPY source1 FROM '~/Downloads/brightwheel_source1.csv' DELIMITER ',' csv header;
 COPY source2 FROM '~/Downloads/brightwheel_source2.csv' DELIMITER ',' csv header;
 COPY source3 FROM '~/Downloads/brightwheel_source3.csv' DELIMITER ',' csv header;
 ```
 
-### DBT:
-1. Navigate to where you want to install DBT 
+## DBT Setup
+1. Navigate to the directory where you want to install DBT 
 
-2. Install DBT Core with the postgres adapter
-``` bash
+2. Create a new virtual environment
+``` zsh
+python -m venv dbt-env
+```
+
+3. Activate that virtual environment
+``` zsh
+source dbt-env/bin/activate
+```
+
+4. Install DBT Core with the postgres adapter
+``` zsh
 python -m pip install dbt-core dbt-postgres
 ```
 
-3. Run `dbt init` to configure your dbt project and set up your `profile.yml` if not already created.
+5. Initialize your DBT project
+- Run `dbt init` to configure your dbt project and set up your `profile.yml` if not already created. You'll need your 
 
+6. Clone the project
+``` zsh
+git clone https://github.com/ptfoote/brightwheel.git
+```
 
-### Long Term Considerations
+7. Build the project
+``` zsh
+dbt build
+```
+
+## Long Term Considerations
 Some long term considerations I would make would when considering moving this to production include:
-- adding an `etl_loaded_at` field from source to enable easy identifaction of recently uploaded records and help answer questions such as 
-    - Of the delta leads, what data has changed since previous loads? 
-    - How many net new leads are generated by each file ingested? 
-- add dbt tests for unique and non-null values for all primary keys to ensure no record fanning
-- adding duplicate lead merging logic in the intermediate layer to derive more holistic data where available
-- Drive enrichment around city, website and schedule
-- Are there duplicate/delta leads based on phone (primary identifier)/address information (secondary identifier)? 
-- Row count tests in comparison to prior runs to ensure records aren't dropped and there are no schema change issues
-- I could easily see the need for each of these staging models to be their own mart model
-- I could see an argument for this `mart/leads` model to have a better home in the `activation` layer and this is why you see `activation` and `intermediate` folders despite no models in them
+1. Moving to a cloud based data ingestion provider.
+    - My personal preference is Airbyte but Stitch and Fivetran accomplish the same while reducing the amount of resources invested in data ingestion.
+    - Within a better data ingestion process the first field I would seek to add would be an `etl_loaded_at` timestamp from source to enable easy identifaction of recently uploaded records and help answer questions posed that are not easily answerable in the existing dataset:
+        - Of the delta leads, what data has changed since previous loads? 
+        - How many net new leads are generated by each file ingested?
+4. Data Tests
+   - Add dbt tests for unique and non-null values for all primary keys to ensure no record fanning
+5. Data Quality
+   - Consider adding an intermediate model to resolve duplicate leads while providing the most holistic data possible.
+   - Enforce no duplicate/delta leads based on phone (primary identifier)/address information (secondary identifier)?
+   - Add row count tests in comparison to prior runs to ensure records aren't dropped and there are no schema change issues
+6. Data Enrichment
+   - Driving enrichment around lead data could prove useful. Some clear examples include city and website.
+   - Schedule data could be brought denormalized onto this model or better yet in its own mart model at a daily level.
+7. Project Structure
+   - I could easily see the need for each of these staging models to be their own mart model
+   - I could see an argument for this `mart/leads` model to have a better home in the `activation` layer and this is why you see `activation` and `intermediate` folders despite no models in them
 
 
 ## Fields Dropped
