@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: salesforce_leads
+    description: "This model represents leads data from Salesforce, capturing various attributes related to leads such as personal information, contact details, and status updates."
+    columns:
+      - name: id
+        description: "The unique identifier for the lead."
+      - name: is_deleted
+        description: "Indicates whether the lead record has been deleted."
+      - name: last_name
+        description: "The last name of the lead."
+      - name: first_name
+        description: "The first name of the lead."
+      - name: title
+        description: "The title of the lead (e.g., Mr., Mrs., Dr.)."
+      - name: company
+        description: "The company associated with the lead."
+      - name: street
+        description: "Street address of the lead."
+      - name: city
+        description: "City of the lead's address."
+      - name: state
+        description: "State of the lead's address."
+      - name: postal_code
+        description: "Postal code of the lead's address."
+      - name: country
+        description: "Country of the lead's address."
+      - name: phone
+        description: "Primary phone number of the lead."
+      - name: mobile_phone
+        description: "Mobile phone number of the lead."
+      - name: email
+        description: "Email address of the lead."
+      - name: website
+        description: "Website associated with the lead's company."
+      - name: lead_source
+        description: "Source from which the lead was generated."
+      - name: status
+        description: "Current status of the lead (e.g., New, Contacted, Qualified)."
+      - name: is_converted
+        description: "Indicates whether the lead has been converted to an opportunity or contact."
+      - name: created_date
+        description: "The date when the lead was created."
+      - name: last_modified_date
+        description: "The date when the lead was last modified."
+      - name: last_activity_date
+        description: "The date of the last activity related to the lead."
+      - name: last_viewed_date
+        description: "The date when the lead was last viewed."
+      - name: last_referenced_date
+        description: "The date when the lead was last referenced in another record."
+      - name: email_bounced_reason
+        description: "Reason for email bounce if applicable."
+      - name: email_bounced_date
+        description: "The date when the email bounced if applicable."
+      - name: outreach_stage
+        description: "The outreach stage of the lead in the sales process."
+      - name: current_enrollment
+        description: "Current enrollment status of the lead in any relevant programs."
+      - name: capacity
+        description: "The capacity of the lead's associated entity, if applicable."
+      - name: lead_source_last_updated
+        description: "The date when the lead source was last updated."
+      - name: brightwheel_school_uuid
+        description: "The unique identifier for the school associated with the lead in the Brightwheel system."
+

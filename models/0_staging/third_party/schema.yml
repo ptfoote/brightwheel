@@ -1,0 +1,149 @@
+version: 2
+
+sources:
+  - name: source_1
+    description: "This source table contains information about credentials and their statuses."
+    tables:
+      - name: table_name_1  # Replace with your actual table name
+        description: "Contains data regarding credentials, their status, expiration dates, and contact details."
+        columns:
+          - name: name
+            description: "The name associated with the credential."
+          - name: credential_type
+            description: "The type of credential (e.g., license, certification)."
+          - name: credential_number
+            description: "The unique identifier or number for the credential."
+          - name: status
+            description: "The current status of the credential (e.g., active, expired)."
+          - name: expiration_date
+            description: "The date when the credential expires."
+          - name: disciplinary_action
+            description: "Details of any disciplinary action taken against the credential holder."
+          - name: address
+            description: "The address of the credential holder."
+          - name: state
+            description: "The state where the credential is issued."
+          - name: county
+            description: "The county where the credential holder resides or operates."
+          - name: phone
+            description: "Contact phone number associated with the credential."
+          - name: first_issue_date
+            description: "The date when the credential was first issued."
+          - name: primary_contact_name
+            description: "Name of the primary contact person associated with the credential."
+          - name: primary_contact_role
+            description: "Role of the primary contact person."
+
+  - name: source_2
+    description: "This source table contains information about licensed facilities, their operations, and capacity."
+    tables:
+      - name: table_name_2  # Replace with your actual table name
+        description: "Contains data regarding licensed facilities including subsidy acceptance, operational hours, and caregiver details."
+        columns:
+          - name: type_license
+            description: "The type of license held by the facility."
+          - name: company
+            description: "The name of the company or organization holding the license."
+          - name: accepts_subsidy
+            description: "Indicates if the facility accepts subsidy payments."
+          - name: year_round
+            description: "Indicates if the facility operates year-round."
+          - name: daytime_hours
+            description: "Indicates if the facility operates during daytime hours."
+          - name: star_level
+            description: "The quality rating level of the facility."
+          - name: mon
+            description: "Operational status for Monday."
+          - name: tues
+            description: "Operational status for Tuesday."
+          - name: wed
+            description: "Operational status for Wednesday."
+          - name: thurs
+            description: "Operational status for Thursday."
+          - name: friday
+            description: "Operational status for Friday."
+          - name: saturday
+            description: "Operational status for Saturday."
+          - name: sunday
+            description: "Operational status for Sunday."
+          - name: primary_caregiver
+            description: "Name of the primary caregiver at the facility."
+          - name: phone
+            description: "Contact phone number of the facility."
+          - name: email
+            description: "Email address for contacting the facility."
+          - name: address1
+            description: "Primary address line of the facility."
+          - name: address2
+            description: "Secondary address line of the facility."
+          - name: city
+            description: "City where the facility is located."
+          - name: state
+            description: "State where the facility is located."
+          - name: zip
+            description: "ZIP code for the facility's location."
+          - name: subsidy_contract_number
+            description: "Number associated with the facility's subsidy contract."
+          - name: total_cap
+            description: "Total capacity of the facility."
+          - name: ages_accepted_1
+            description: "Ages of children accepted by the facility (group 1)."
+          - name: ages_accepted_2
+            description: "Ages of children accepted by the facility (group 2)."
+          - name: ages_accepted_3
+            description: "Ages of children accepted by the facility (group 3)."
+          - name: ages_accepted_4
+            description: "Ages of children accepted by the facility (group 4)."
+          - name: license_monitoring_since
+            description: "The date since when the facility's license has been monitored."
+          - name: school_year_only
+            description: "Indicates if the facility operates only during the school year."
+          - name: evening_hours
+            description: "Indicates if the facility operates during evening hours."
+
+  - name: source_3
+    description: "This source table contains detailed information about operations, their capacity, and contact information."
+    tables:
+      - name: table_name_3  # Replace with your actual table name
+        description: "Contains data about various operations including licensing status, contact details, and capacity."
+        columns:
+          - name: operation
+            description: "The type of operation being documented."
+          - name: agency_number
+            description: "Unique number assigned to the operating agency."
+          - name: operation_name
+            description: "Name of the operation."
+          - name: address
+            description: "Address where the operation is located."
+          - name: city
+            description: "City where the operation is located."
+          - name: state
+            description: "State where the operation is located."
+          - name: zip
+            description: "ZIP code of the operation's location."
+          - name: county
+            description: "County where the operation is located."
+          - name: phone
+            description: "Contact phone number for the operation."
+          - name: type
+            description: "Type or category of the operation."
+          - name: status
+            description: "Current operational status."
+          - name: issue_date
+            description: "The date when the operation was issued a license or status."
+          - name: capacity
+            description: "The total capacity of the operation."
+          - name: email_address
+            description: "Email address for contacting the operation."
+          - name: facility_id
+            description: "Unique identifier for the facility."
+          - name: monitoring_frequency
+            description: "How often the operation is monitored for compliance or performance."
+          - name: infant
+            description: "Indicates if the operation accommodates infants."
+          - name: toddler
+            description: "Indicates if the operation accommodates toddlers."
+          - name: preschool
+            description: "Indicates if the operation accommodates preschool-aged children."
+          - name: school
+            description: "Indicates if the operation accommodates school-aged children."

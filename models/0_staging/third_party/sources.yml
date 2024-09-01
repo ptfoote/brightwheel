@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: third_party
+    database: brightwheel
+    schema: public
+    tables:
+      - name: source1
+      - name: source2
+      - name: source3
