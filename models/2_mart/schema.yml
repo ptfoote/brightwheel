@@ -1,0 +1,64 @@
+version: 2
+
+models:
+  - name: leads_mart
+    description: "This model represents a leads mart, aggregating lead data including demographic information, licensing details, and contact information."
+    columns:
+      - name: lead_source
+        description: "Source of the lead (e.g., Salesforce, source1, source2)."
+      - name: accepts_financial_aid
+        description: "Indicates whether the lead accepts financial aid."
+      - name: ages_served
+        description: "Range of ages served by the lead, formatted as 'min_age-max_age'."
+      - name: capacity
+        description: "The maximum number of individuals or entities the lead can accommodate."
+      - name: certificate_expiration_date
+        description: "The date when the lead's certificate expires."
+      - name: city
+        description: "City where the lead is located."
+      - name: address1
+        description: "Primary address line for the lead's location."
+      - name: address2
+        description: "Secondary address line for the lead's location."
+      - name: company
+        description: "Company name associated with the lead."
+      - name: phone
+        description: "Primary phone number for contacting the lead."
+      - name: phone2
+        description: "Secondary phone number for contacting the lead."
+      - name: county
+        description: "County where the lead is located."
+      - name: email
+        description: "Email address for contacting the lead."
+      - name: first_name
+        description: "First name of the lead contact person."
+      - name: last_name
+        description: "Last name of the lead contact person."
+      - name: license_status
+        description: "Current status of the lead's license (e.g., active, expired)."
+      - name: license_issued
+        description: "The date when the lead's license was issued."
+      - name: license_number
+        description: "The unique number assigned to the lead's license."
+      - name: license_type
+        description: "Type of license held by the lead (e.g., business, personal)."
+      - name: licensee_name
+        description: "Name of the person or entity to whom the license is issued."
+      - name: max_age
+        description: "Maximum age of individuals the lead serves."
+      - name: min_age
+        description: "Minimum age of individuals the lead serves."
+      - name: provider_id
+        description: "Unique identifier for the lead provider."
+      - name: schedule
+        description: "Schedule or operating hours for the lead."
+      - name: state
+        description: "State where the lead is located."
+      - name: title
+        description: "Title or position of the lead contact person."
+      - name: website_address
+        description: "Website URL associated with the lead."
+      - name: zip
+        description: "ZIP code for the lead's location."
+      - name: facility_type
+        description: "Type of facility associated with the lead (e.g., daycare, school)."
