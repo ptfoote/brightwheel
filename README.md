@@ -224,6 +224,7 @@ Some long term considerations I would make would when considering moving this to
    - Consider adding an intermediate model to resolve duplicate leads while providing the most holistic data possible.
    - Enforce no duplicate/delta leads based on phone (primary identifier)/address information (secondary identifier)?
    - Add row count tests in comparison to prior runs to ensure records aren't dropped and there are no schema change issues
+   - Enforcement of datatypes
 6. Data Enrichment
    - Driving enrichment around lead data could prove useful. Some clear examples include city and website.
    - Schedule data could be brought denormalized onto this model or better yet in its own mart model at a daily level.
