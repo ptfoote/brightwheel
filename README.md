@@ -3,7 +3,7 @@
 This is my submission for the Brightwheel technical exam. The below README will educate you on how to ingest the supplied google spreadsheet data and initalize a DBT project to create a basic `leads` mart model.
 
 > [!Note]
-> This setup guide is geared towards Mac's leveeraging Apple Silicon. If you are leveraging a non Apple machine or an Apple machine with an Intel processor your base setup instructions may differ.
+> This setup guide is geared towards Mac's leveraging Apple Silicon. If you are leveraging a non Apple machine or an Apple machine with an Intel processor your base setup instructions may differ.
 
 
 ## Pre-requisites
